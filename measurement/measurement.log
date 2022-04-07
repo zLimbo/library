@@ -1,0 +1,95 @@
+servers.num: 8, servers.f: 2
+-- Using view stored on disk
+-- myAddress(before):127.0.1.1
+-- myAddress(after):219.228.148.181
+-- SSL/TLS handshake complete!, Id:0  ## CipherSuite: TLS_ECDHE_ECDSA_WITH_NULL_SHA.
+-- SSL/TLS handshake complete!, Id:1  ## CipherSuite: TLS_ECDHE_ECDSA_WITH_NULL_SHA.
+-- SSL/TLS handshake complete!, Id:2  ## CipherSuite: TLS_ECDHE_ECDSA_WITH_NULL_SHA.
+-- SSL/TLS handshake complete!, Id:3  ## CipherSuite: TLS_ECDHE_ECDSA_WITH_NULL_SHA.
+-- SSL/TLS handshake complete!, Id:4  ## CipherSuite: TLS_ECDHE_ECDSA_WITH_NULL_SHA.
+-- myAddress: 219.228.148.181
+-- configHome: config, hostsFileName: 
+-- ID = 5
+-- N = 8
+-- F = 2
+-- Port (client <-> server) = 11000
+-- Port (server <-> server) = 11001
+-- requestTimeout = 2000
+-- maxBatch = 1024
+-- Binded replica to IP address 219.228.148.181
+-- SSL/TLS enabled, protocol version: TLSv1.2
+-- In current view: ID:0; F:2; Processes:0(/219.228.148.45:11000),1(/219.228.148.80:11000),2(/219.228.148.89:11000),3(/219.228.148.129:11000),4(/219.228.148.169:11000),5(/219.228.148.181:11000),6(/219.228.148.222:11000),7(/219.228.148.231:11000),
+-- Retrieving State
+-- Replica state is up to date
+-- 
+		###################################
+		    Ready to process operations    
+		###################################
+-- Session Created, active clients=0
+-- M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>(1|1|7.73102837235516E7|1.293488979520279E-6|1.293488979520279E-6)
+-- Session Created, active clients=1
+-- Session Created, active clients=2
+-- M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>(2|32|208.3138741|15.361434824373996|15.361434824373996)
+-- Session Created, active clients=3
+-- Session Created, active clients=4
+-- M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>(4|40|210.4796067|19.00421643081681|19.00421643081681)
+-- Session Created, active clients=5
+-- Session Created, active clients=6
+-- M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>(6|41|205.4500193|19.95619184641274|19.95619184641274)
+-- Session Created, active clients=7
+-- Session Created, active clients=8
+-- M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>(8|40|209.5534926|19.088204879673764|19.95619184641274)
+-- Session Created, active clients=9
+-- M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>(10|43|210.7784932|20.40056333413432|20.40056333413432)
+-- Session Created, active clients=10
+-- Session Created, active clients=11
+-- M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>(12|38|202.6064795|18.75556995698156|20.40056333413432)
+-- M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>(12|38|200.7230597|18.93155677120241|20.40056333413432)
+-- M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>(12|41|212.9486478|19.25346811241879|20.40056333413432)
+-- M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>(12|43|206.1906538|20.854485500448032|20.854485500448032)
+-- M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>(12|41|212.0232251|19.337504172320035|20.854485500448032)
+-- M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>(12|43|206.5135263|20.821880663416863|20.854485500448032)
+-- M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>(12|41|211.4877351|19.386467012195073|20.854485500448032)
+-- M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>(12|43|204.3025439|21.047217121803055|21.047217121803055)
+-- M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>(12|41|208.9310971|19.62369439929581|21.047217121803055)
+-- M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>(12|48|230.5904431|20.81612722309739|21.047217121803055)
+-- M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>(12|43|200.0047235|21.499492235742125|21.499492235742125)
+-- M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>(12|41|207.8210637|19.728510320390587|21.499492235742125)
+-- M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>(12|48|222.4534174|21.577551183981047|21.577551183981047)
+-- M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>(12|48|228.1911427|21.034996990704848|21.577551183981047)
+-- M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>(11|44|209.4192495|21.0104849984194|21.577551183981047)
+-- M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>(11|44|220.0464277|19.99578019052749|21.577551183981047)
+-- M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>(11|43|200.3886966|21.45829616619204|21.577551183981047)
+-- M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>(10|46|218.1787018|21.083634479669453|21.577551183981047)
+-- M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>(10|44|218.3552946|20.15064488388183|21.577551183981047)
+-- M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>(9|45|215.3198921|20.899137353784695|21.577551183981047)
+-- M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>(9|45|210.2019375|21.407985356938017|21.577551183981047)
+-- M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>(7|45|212.5744125|21.169057682330415|21.577551183981047)
+-- M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>(6|43|203.899712|21.088798791437235|21.577551183981047)
+-- 
+---------- DEBUG INFO ----------
+
+Current time: 15:00:12.429
+Current leader: 0
+Current regency: 0
+
+Last finished consensus: 294
+
+	 -- Consensus state: 
+
+		ETS=0 
+		WriteSet=[[0 :: 2Lb7AINvAfAPpjS0oxY9e1NAmgAmZ9i/lhiO1bagtnM=]] 
+		(VAL,TS)=[0 :: 2Lb7AINvAfAPpjS0oxY9e1NAmgAmZ9i/lhiO1bagtnM=]
+
+	 -- Epoch state: 
+
+		CID=294 
+		TS=0 
+		Propose=[2Lb7AINvAfAPpjS0oxY9e1NAmgAmZ9i/lhiO1bagtnM=] 
+		Writes=([2Lb7AINvAfAPpjS0oxY9e1NAmgAmZ9i/lhiO1bagtnM=], [2Lb7AINvAfAPpjS0oxY9e1NAmgAmZ9i/lhiO1bagtnM=], [2Lb7AINvAfAPpjS0oxY9e1NAmgAmZ9i/lhiO1bagtnM=], [2Lb7AINvAfAPpjS0oxY9e1NAmgAmZ9i/lhiO1bagtnM=], [2Lb7AINvAfAPpjS0oxY9e1NAmgAmZ9i/lhiO1bagtnM=], [2Lb7AINvAfAPpjS0oxY9e1NAmgAmZ9i/lhiO1bagtnM=], [2Lb7AINvAfAPpjS0oxY9e1NAmgAmZ9i/lhiO1bagtnM=], [null]) 
+		Accepts=([2Lb7AINvAfAPpjS0oxY9e1NAmgAmZ9i/lhiO1bagtnM=], [2Lb7AINvAfAPpjS0oxY9e1NAmgAmZ9i/lhiO1bagtnM=], [2Lb7AINvAfAPpjS0oxY9e1NAmgAmZ9i/lhiO1bagtnM=], [2Lb7AINvAfAPpjS0oxY9e1NAmgAmZ9i/lhiO1bagtnM=], [2Lb7AINvAfAPpjS0oxY9e1NAmgAmZ9i/lhiO1bagtnM=], [null], [2Lb7AINvAfAPpjS0oxY9e1NAmgAmZ9i/lhiO1bagtnM=], [null])
+
+Consensus in execution: None
+
+---------- ---------- ----------
+
