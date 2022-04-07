@@ -51,49 +51,53 @@ public class ThroughputLatencyClient {
     public static int initId = 0;
     static LinkedBlockingQueue<String> latencies;
     static Thread writerThread;
-    
-    /*public static String privKey =  "MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgXa3mln4anewXtqrM" +
-                                    "hMw6mfZhslkRa/j9P790ToKjlsihRANCAARnxLhXvU4EmnIwhVl3Bh0VcByQi2um" +
-                                    "9KsJ/QdCDjRZb1dKg447voj5SZ8SSZOUglc/v8DJFFJFTfygjwi+27gz";
-    
-    public static String pubKey =   "MIICNjCCAd2gAwIBAgIRAMnf9/dmV9RvCCVw9pZQUfUwCgYIKoZIzj0EAwIwgYEx" +
-                                    "CzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1TYW4g" +
-                                    "RnJhbmNpc2NvMRkwFwYDVQQKExBvcmcxLmV4YW1wbGUuY29tMQwwCgYDVQQLEwND" +
-                                    "T1AxHDAaBgNVBAMTE2NhLm9yZzEuZXhhbXBsZS5jb20wHhcNMTcxMTEyMTM0MTEx" +
-                                    "WhcNMjcxMTEwMTM0MTExWjBpMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZv" +
-                                    "cm5pYTEWMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzEMMAoGA1UECxMDQ09QMR8wHQYD" +
-                                    "VQQDExZwZWVyMC5vcmcxLmV4YW1wbGUuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0D" +
-                                    "AQcDQgAEZ8S4V71OBJpyMIVZdwYdFXAckItrpvSrCf0HQg40WW9XSoOOO76I+Umf" +
-                                    "EkmTlIJXP7/AyRRSRU38oI8Ivtu4M6NNMEswDgYDVR0PAQH/BAQDAgeAMAwGA1Ud" +
-                                    "EwEB/wQCMAAwKwYDVR0jBCQwIoAginORIhnPEFZUhXm6eWBkm7K7Zc8R4/z7LW4H" +
-                                    "ossDlCswCgYIKoZIzj0EAwIDRwAwRAIgVikIUZzgfuFsGLQHWJUVJCU7pDaETkaz" +
-                                    "PzFgsCiLxUACICgzJYlW7nvZxP7b6tbeu3t8mrhMXQs956mD4+BoKuNI";*/
-    
+
+    /*
+     * public static String privKey =
+     * "MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgXa3mln4anewXtqrM" +
+     * "hMw6mfZhslkRa/j9P790ToKjlsihRANCAARnxLhXvU4EmnIwhVl3Bh0VcByQi2um" +
+     * "9KsJ/QdCDjRZb1dKg447voj5SZ8SSZOUglc/v8DJFFJFTfygjwi+27gz";
+     * 
+     * public static String pubKey =
+     * "MIICNjCCAd2gAwIBAgIRAMnf9/dmV9RvCCVw9pZQUfUwCgYIKoZIzj0EAwIwgYEx" +
+     * "CzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1TYW4g" +
+     * "RnJhbmNpc2NvMRkwFwYDVQQKExBvcmcxLmV4YW1wbGUuY29tMQwwCgYDVQQLEwND" +
+     * "T1AxHDAaBgNVBAMTE2NhLm9yZzEuZXhhbXBsZS5jb20wHhcNMTcxMTEyMTM0MTEx" +
+     * "WhcNMjcxMTEwMTM0MTExWjBpMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZv" +
+     * "cm5pYTEWMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzEMMAoGA1UECxMDQ09QMR8wHQYD" +
+     * "VQQDExZwZWVyMC5vcmcxLmV4YW1wbGUuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0D" +
+     * "AQcDQgAEZ8S4V71OBJpyMIVZdwYdFXAckItrpvSrCf0HQg40WW9XSoOOO76I+Umf" +
+     * "EkmTlIJXP7/AyRRSRU38oI8Ivtu4M6NNMEswDgYDVR0PAQH/BAQDAgeAMAwGA1Ud" +
+     * "EwEB/wQCMAAwKwYDVR0jBCQwIoAginORIhnPEFZUhXm6eWBkm7K7Zc8R4/z7LW4H" +
+     * "ossDlCswCgYIKoZIzj0EAwIDRwAwRAIgVikIUZzgfuFsGLQHWJUVJCU7pDaETkaz" +
+     * "PzFgsCiLxUACICgzJYlW7nvZxP7b6tbeu3t8mrhMXQs956mD4+BoKuNI";
+     */
+
     public static String privKey = "MD4CAQAwEAYHKoZIzj0CAQYFK4EEAAoEJzAlAgEBBCBnhIob4JXH+WpaNiL72BlbtUMAIBQoM852d+tKFBb7fg==";
     public static String pubKey = "MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAEavNEKGRcmB7u49alxowlwCi1s24ANOpOQ9UiFBxgqnO/RfOl3BJm0qE2IJgCnvL7XUetwj5C/8MnMWi9ux2aeQ==";
-    
-    
+
     @SuppressWarnings("static-access")
     public static void main(String[] args) throws IOException {
         if (args.length < 8) {
-            System.out.println("Usage: ... ThroughputLatencyClient <initial client id> <number of clients> <number of operations> <request size> <interval (ms)> <read only?> <verbose?> <nosig | default | ecdsa>");
+            System.out.println(
+                    "Usage: ... ThroughputLatencyClient <initial client id> <number of clients> <number of operations> <request size> <interval (ms)> <read only?> <verbose?> <nosig | default | ecdsa>");
             System.exit(-1);
         }
 
         initId = Integer.parseInt(args[0]);
         latencies = new LinkedBlockingQueue<>();
         writerThread = new Thread() {
-            
+
             public void run() {
-                
+
                 FileWriter f = null;
                 try {
                     f = new FileWriter("./latencies_" + initId + ".txt");
                     while (true) {
-                        
+
                         f.write(latencies.take());
-                    }   
-                    
+                    }
+
                 } catch (IOException | InterruptedException ex) {
                     ex.printStackTrace();
                 } finally {
@@ -106,7 +110,7 @@ public class ThroughputLatencyClient {
             }
         };
         writerThread.start();
-        
+
         int numThreads = Integer.parseInt(args[1]);
 
         int numberOfOps = Integer.parseInt(args[2]);
@@ -115,49 +119,52 @@ public class ThroughputLatencyClient {
         boolean readOnly = Boolean.parseBoolean(args[5]);
         boolean verbose = Boolean.parseBoolean(args[6]);
         String sign = args[7];
-        
+
         int s = 0;
-        if (!sign.equalsIgnoreCase("nosig")) s++;
-        if (sign.equalsIgnoreCase("ecdsa")) s++;
-        
+        if (!sign.equalsIgnoreCase("nosig"))
+            s++;
+        if (sign.equalsIgnoreCase("ecdsa"))
+            s++;
+
         if (s == 2 && Security.getProvider("SunEC") == null) {
-            
+
             System.out.println("Option 'ecdsa' requires SunEC provider to be available.");
             System.exit(0);
         }
 
         Client[] clients = new Client[numThreads];
-        
-        for(int i=0; i<numThreads; i++) {
+
+        for (int i = 0; i < numThreads; i++) {
             try {
                 Thread.sleep(10);
             } catch (InterruptedException ex) {
-                
+
                 ex.printStackTrace();
             }
-            
-            System.out.println("Launching client " + (initId+i));
-            clients[i] = new ThroughputLatencyClient.Client(initId+i,numberOfOps,requestSize,interval,readOnly, verbose, s);
+
+            System.out.println("Launching client " + (initId + i));
+            clients[i] = new ThroughputLatencyClient.Client(initId + i, numberOfOps, requestSize, interval, readOnly,
+                    verbose, s);
         }
 
         ExecutorService exec = Executors.newFixedThreadPool(clients.length);
         Collection<Future<?>> tasks = new LinkedList<>();
-        
+
         for (Client c : clients) {
             tasks.add(exec.submit(c));
         }
-        
+
         // wait for tasks completion
         for (Future<?> currTask : tasks) {
             try {
                 currTask.get();
             } catch (InterruptedException | ExecutionException ex) {
-                
+
                 ex.printStackTrace();
             }
 
         }
-    
+
         exec.shutdown();
 
         System.out.println("All clients done.");
@@ -174,10 +181,14 @@ public class ThroughputLatencyClient {
         ServiceProxy proxy;
         byte[] request;
         int rampup = 1000;
-        
-        public Client(int id, int numberOfOps, int requestSize, int interval, boolean readOnly, boolean verbose, int sign) {
-            super("Client "+id);
-        
+
+        public Client(int id, int numberOfOps, int requestSize, int interval, boolean readOnly, boolean verbose,
+                int sign) {
+            super("Client " + id);
+
+            System.out.println("id:" + id + ", numberOfOps:" + numberOfOps + ", requestSize:" + requestSize
+                    + ", interval:" + interval + ", readOnly:" + readOnly + ", verbose:" + verbose + ", sign:" + sign);
+
             this.id = id;
             this.numberOfOps = numberOfOps;
             this.requestSize = requestSize;
@@ -186,13 +197,13 @@ public class ThroughputLatencyClient {
             this.verbose = verbose;
             this.proxy = new ServiceProxy(id);
             this.request = new byte[this.requestSize];
-            
+
             Random rand = new Random(System.nanoTime() + this.id);
             rand.nextBytes(request);
-                                
+
             byte[] signature = new byte[0];
             Signature eng;
-            
+
             try {
 
                 if (sign > 0) {
@@ -204,12 +215,14 @@ public class ThroughputLatencyClient {
 
                         eng = Signature.getInstance("SHA256withECDSA", "BC");
 
-                        //KeyFactory kf = KeyFactory.getInstance("EC", "BC");
-                        //Base64.Decoder b64 = Base64.getDecoder();
-                        //PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(b64.decode(ThroughputLatencyClient.privKey));
-                        //eng.initSign(kf.generatePrivate(spec));
+                        // KeyFactory kf = KeyFactory.getInstance("EC", "BC");
+                        // Base64.Decoder b64 = Base64.getDecoder();
+                        // PKCS8EncodedKeySpec spec = new
+                        // PKCS8EncodedKeySpec(b64.decode(ThroughputLatencyClient.privKey));
+                        // eng.initSign(kf.generatePrivate(spec));
                         KeyFactory keyFactory = KeyFactory.getInstance("EC");
-                        EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(org.apache.commons.codec.binary.Base64.decodeBase64(privKey));
+                        EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(
+                                org.apache.commons.codec.binary.Base64.decodeBase64(privKey));
                         PrivateKey privateKey = keyFactory.generatePrivate(privateKeySpec);
                         eng.initSign(privateKey);
 
@@ -225,57 +238,62 @@ public class ThroughputLatencyClient {
                 buffer.put(signature);
                 this.request = buffer.array();
 
-
-            } catch (NoSuchAlgorithmException | SignatureException | NoSuchProviderException | InvalidKeyException | InvalidKeySpecException ex) {
+            } catch (NoSuchAlgorithmException | SignatureException | NoSuchProviderException | InvalidKeyException
+                    | InvalidKeySpecException ex) {
                 ex.printStackTrace();
                 System.exit(0);
             }
-            
+
         }
 
         public void run() {
-            
+
             System.out.println("Warm up...");
 
             int req = 0;
-            
+
+            long start = System.nanoTime();
+
             for (int i = 0; i < numberOfOps / 2; i++, req++) {
-                if (verbose) System.out.print("Sending req " + req + "...");
+                if (verbose)
+                    System.out.print("Sending req " + req + "...");
 
                 long last_send_instant = System.nanoTime();
-                
+
                 byte[] reply = null;
-                if(readOnly)
-                        reply = proxy.invokeUnordered(request);
+                if (readOnly)
+                    reply = proxy.invokeUnordered(request);
                 else
-                        reply = proxy.invokeOrdered(request);
+                    reply = proxy.invokeOrdered(request);
                 long latency = System.nanoTime() - last_send_instant;
-                
+
                 try {
-                    if (reply != null) latencies.put(id + "\t" + System.currentTimeMillis() + "\t" + latency + "\n");
+                    if (reply != null)
+                        latencies.put(id + "\t" + System.currentTimeMillis() + "\t" + latency + "\n");
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
-                        
-                if (verbose) System.out.println(" sent!");
 
-                if (verbose && (req % 1000 == 0)) System.out.println(this.id + " // " + req + " operations sent!");
+                if (verbose)
+                    System.out.println(" sent!");
 
-		try {
-                        
-                        //sleeps interval ms before sending next request
-                        if (interval > 0) {
-                            
-                            Thread.sleep(interval);
-                        }
-                        else if (this.rampup > 0) {
-                            Thread.sleep(this.rampup);
-                        }
-                        this.rampup -= 100;
-                        
-                    } catch (InterruptedException ex) {
-                        ex.printStackTrace();
+                if (verbose && (req % 1000 == 0))
+                    System.out.println(this.id + " // " + req + " operations sent!");
+
+                try {
+
+                    // sleeps interval ms before sending next request
+                    if (interval > 0) {
+
+                        Thread.sleep(interval);
+                    } else if (this.rampup > 0) {
+                        Thread.sleep(this.rampup);
                     }
+                    this.rampup -= 100;
+
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
             }
 
             Storage st = new Storage(numberOfOps / 2);
@@ -284,52 +302,62 @@ public class ThroughputLatencyClient {
 
             for (int i = 0; i < numberOfOps / 2; i++, req++) {
                 long last_send_instant = System.nanoTime();
-                if (verbose) System.out.print(this.id + " // Sending req " + req + "...");
+                if (verbose)
+                    System.out.print(this.id + " // Sending req " + req + "...");
 
-                if(readOnly)
-                        proxy.invokeUnordered(request);
+                if (readOnly)
+                    proxy.invokeUnordered(request);
                 else
-                        proxy.invokeOrdered(request);
+                    proxy.invokeOrdered(request);
                 long latency = System.nanoTime() - last_send_instant;
-                
+
                 try {
                     latencies.put(id + "\t" + System.currentTimeMillis() + "\t" + latency + "\n");
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
-                        
-                if (verbose) System.out.println(this.id + " // sent!");
+
+                if (verbose)
+                    System.out.println(this.id + " // sent!");
                 st.store(latency);
 
-                
-                    try {
-                        
-                        //sleeps interval ms before sending next request
-                        if (interval > 0) {
-                            
-                            Thread.sleep(interval);
-                        }
-                        else if (this.rampup > 0) {
-                            Thread.sleep(this.rampup);
-                        }
-                        this.rampup -= 100;
-                        
-                    } catch (InterruptedException ex) {
-                        ex.printStackTrace();
+                try {
+
+                    // sleeps interval ms before sending next request
+                    if (interval > 0) {
+
+                        Thread.sleep(interval);
+                    } else if (this.rampup > 0) {
+                        Thread.sleep(this.rampup);
                     }
-                
-                                
-                if (verbose && (req % 1000 == 0)) System.out.println(this.id + " // " + req + " operations sent!");
+                    this.rampup -= 100;
+
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                if (verbose && (req % 1000 == 0))
+                    System.out.println(this.id + " // " + req + " operations sent!");
             }
 
-            if(id == initId) {
-                System.out.println(this.id + " // Average time for " + numberOfOps / 2 + " executions (-10%) = " + st.getAverage(true) / 1000 + " us ");
-                System.out.println(this.id + " // Standard desviation for " + numberOfOps / 2 + " executions (-10%) = " + st.getDP(true) / 1000 + " us ");
-                System.out.println(this.id + " // Average time for " + numberOfOps / 2 + " executions (all samples) = " + st.getAverage(false) / 1000 + " us ");
-                System.out.println(this.id + " // Standard desviation for " + numberOfOps / 2 + " executions (all samples) = " + st.getDP(false) / 1000 + " us ");
-                System.out.println(this.id + " // Maximum time for " + numberOfOps / 2 + " executions (all samples) = " + st.getMax(false) / 1000 + " us ");
+            if (id == initId) {
+                System.out.println(this.id + " // Average time for " + numberOfOps / 2 + " executions (-10%) = "
+                        + st.getAverage(true) / 1e6 + " ms ");
+                System.out.println(this.id + " // Standard desviation for " + numberOfOps / 2 + " executions (-10%) = "
+                        + st.getDP(true) / 1e6 + " ms ");
+                System.out.println(this.id + " // Average time for " + numberOfOps / 2 + " executions (all samples) = "
+                        + st.getAverage(false) / 1e6 + " ms ");
+                System.out.println(this.id + " // Standard desviation for " + numberOfOps / 2
+                        + " executions (all samples) = " + st.getDP(false) / 1e6 + " ms ");
+                System.out.println(this.id + " // Maximum time for " + numberOfOps / 2 + " executions (all samples) = "
+                        + st.getMax(false) / 1e6 + " ms ");
+
+                long end = System.nanoTime();
+                double spend = (double) (end - start) / 10e9;
+                double tps = (double) numberOfOps / 2 / spend;
+                System.out.println(this.id + " | spend: " + spend + "s, tps: " + tps);
             }
-            
+
             proxy.close();
         }
     }

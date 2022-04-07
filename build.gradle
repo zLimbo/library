@@ -33,17 +33,17 @@ remotes {
     //     //identity='<private key>'
     // }
     node0 {
-        host = '219.228.148.45'
-        user = 'z'
-        password = 'z'
-    }
-    node1 {
         host = '219.228.148.80'
         user = 'z'
         password = 'z'
     }
+    node1 {
+        host = '219.228.148.89'
+        user = 'z'
+        password = 'z'
+    }
     node2 {
-        host = '219.228.148.172'
+        host = '219.228.148.181'
         user = 'z'
         password = 'z'
     }
@@ -53,7 +53,7 @@ remotes {
         password = 'z'
     }
     node4 {
-        host = '219.228.148.181'
+        host = '219.228.148.172'
         user = 'z'
         password = 'z'
     }
@@ -63,25 +63,25 @@ task remoteDeploy(dependsOn: installDist) {
     doLast {
         def fileSeparator = System.getProperty("file.separator")
         def src = project.buildDir.name + fileSeparator + "install" + fileSeparator + project.name
-        def target = '~/smart'
+        def target = '~/smartbft'
         println ("from: ${src}, into: ${target}")
-        ssh.run {
-            session(remotes.node0) {
-                put from: src, into: target
-            }
-            session(remotes.node1) {
-                put from: src, into: target
-            }
-            session(remotes.node2) {
-                put from: src, into: target
-            }
-            session(remotes.node3) {
-                put from: src, into: target
-            }
-            session(remotes.node4) {
-                put from: src, into: target
-            }
-        }
+        // ssh.run {
+        //     session(remotes.node0) {
+        //         put from: src, into: target
+        //     }
+        //     session(remotes.node1) {
+        //         put from: src, into: target
+        //     }
+        //     session(remotes.node2) {
+        //         put from: src, into: target
+        //     }
+        //     session(remotes.node3) {
+        //         put from: src, into: target
+        //     }
+        //     session(remotes.node4) {
+        //         put from: src, into: target
+        //     }
+        // }
     }
 }
 

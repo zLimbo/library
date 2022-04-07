@@ -80,8 +80,8 @@ public class ThroughputLatencyServer extends DefaultSingleRecoverable {
 			double throughput = numRequests / deltaTime;
 			if (throughput > maxThroughput)
 				maxThroughput = throughput;
-			logger.info("M:(clients[#]|requests[#]|delta[ns]|throughput[ops/s], max[ops/s])>({}|{}|{}|{}|{})",
-					senders.size(), numRequests, delta, throughput, maxThroughput);
+			logger.info("M:(clients[#]|requests[#]|delta[ms]|throughput[ops/s], max[ops/s])>({}|{}|{}|{}|{})",
+					senders.size(), numRequests, (double) delta / 10e6, throughput, maxThroughput);
 			numRequests = 0;
 			startTime = currentTime;
 			senders.clear();

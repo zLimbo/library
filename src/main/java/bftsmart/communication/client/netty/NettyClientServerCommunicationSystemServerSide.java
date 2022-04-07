@@ -125,7 +125,7 @@ public class NettyClientServerCommunicationSystemServerSide extends SimpleChanne
 
 			if (InetAddress.getLoopbackAddress().getHostAddress().equals(confAddress)) {
 
-			myAddress = InetAddress.getLoopbackAddress().getHostAddress();
+				myAddress = InetAddress.getLoopbackAddress().getHostAddress();
 
 			}
 
@@ -159,6 +159,9 @@ public class NettyClientServerCommunicationSystemServerSide extends SimpleChanne
 			ChannelFuture f = b.bind(new InetSocketAddress(myAddress, myPort)).sync();
 
 			// logger.info("confAddress = " + confAddress);
+			String configHome = controller.getStaticConf().getConfigHome();
+			String hostsFileName = controller.getStaticConf().getHostsFileName();
+			logger.info("configHome: " + configHome + ", hostsFileName: " + hostsFileName);
 
 			logger.info("ID = " + controller.getStaticConf().getProcessId());
 			logger.info("N = " + controller.getCurrentViewN());

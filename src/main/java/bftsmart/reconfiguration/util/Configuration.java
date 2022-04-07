@@ -51,7 +51,6 @@ public class Configuration {
 	public static final String DEFAULT_HASH = "SHA-256";
 	public static final String DEFAULT_HASH_PROVIDER = "SUN";
 
-
 	protected String secretKeyAlgorithm;
 	protected String secretKeyAlgorithmProvider;
 
@@ -86,6 +85,7 @@ public class Configuration {
 
 	protected void init() {
 		logger = LoggerFactory.getLogger(this.getClass());
+
 		try {
 			hosts = new HostsConfig(configHome, hostsFileName);
 
@@ -146,7 +146,7 @@ public class Configuration {
 			} else {
 				hashAlgorithmProvider = s;
 			}
-			
+
 			s = (String) configs.remove("system.communication.defaultKeyLoader");
 			if (s == null) {
 				defaultKeyLoader = DEFAULT_KEYLOADER;
@@ -163,36 +163,41 @@ public class Configuration {
 
 			if (keyLoader == null) {
 				switch (defaultKeyLoader) {
-				case "RSA":
-					keyLoader = new RSAKeyLoader(processId, configHome, defaultKeys, signatureAlgorithm);
-					break;
-				case "ECDSA":
-					keyLoader = new ECDSAKeyLoader(processId, configHome, defaultKeys, signatureAlgorithm);
-					break;
-				case "SunEC":
-					keyLoader = new SunECKeyLoader(processId, configHome, defaultKeys, signatureAlgorithm);
-					break;
-				default:
-					keyLoader = new ECDSAKeyLoader(processId, configHome, defaultKeys, signatureAlgorithm);
-					break;
+					case "RSA":
+						keyLoader = new RSAKeyLoader(processId, configHome, defaultKeys, signatureAlgorithm);
+						break;
+					case "ECDSA":
+						keyLoader = new ECDSAKeyLoader(processId, configHome, defaultKeys, signatureAlgorithm);
+						break;
+					case "SunEC":
+						keyLoader = new SunECKeyLoader(processId, configHome, defaultKeys, signatureAlgorithm);
+						break;
+					default:
+						keyLoader = new ECDSAKeyLoader(processId, configHome, defaultKeys, signatureAlgorithm);
+						break;
 				}
 			}
 
 			TOMUtil.init(
-					secretKeyAlgorithm, 
-					keyLoader.getSignatureAlgorithm(), 
+					secretKeyAlgorithm,
+					keyLoader.getSignatureAlgorithm(),
 					hashAlgorithm,
-					secretKeyAlgorithmProvider, 
+					secretKeyAlgorithmProvider,
 					signatureAlgorithmProvider,
 					hashAlgorithmProvider);
 
 		} catch (Exception e) {
 			LoggerFactory.getLogger(this.getClass()).error("Wrong system.config file format.");
 		}
+		// logger.info("\nconfigs: \n" + configs + "\n");
 	}
 
 	public String getConfigHome() {
 		return configHome;
+	}
+
+	public String getHostsFileName() {
+		return hostsFileName;
 	}
 
 	public boolean useDefaultKeys() {
@@ -323,7 +328,8 @@ public class Configuration {
 			}
 			String sep = System.getProperty("file.separator");
 			String path = configHome + sep + "system.config";
-			;
+			// logger.info("system.config path: " + path);
+
 			FileReader fr = new FileReader(path);
 			BufferedReader rd = new BufferedReader(fr);
 			String line = null;

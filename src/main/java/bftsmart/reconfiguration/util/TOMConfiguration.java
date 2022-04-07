@@ -24,7 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class TOMConfiguration extends Configuration {
-    
+
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected int n;
@@ -62,14 +62,13 @@ public class TOMConfiguration extends Configuration {
     private boolean sameBatchSize;
     private boolean fairbatch;
     private String bindAddress;
-    
-    /* Tulio Ribeiro*/
-    //private Boolean ssltls=true;
+
+    /* Tulio Ribeiro */
+    // private Boolean ssltls=true;
     private String ssltlsProtocolVersion;
     private String keyStoreFile;
-    private String [] enabledCiphers;
-    
-    
+    private String[] enabledCiphers;
+
     /** Creates a new instance of TOMConfiguration */
     public TOMConfiguration(int processId, KeyLoader loader) {
         super(processId, loader);
@@ -79,7 +78,6 @@ public class TOMConfiguration extends Configuration {
     public TOMConfiguration(int processId, String configHome, KeyLoader loader) {
         super(processId, configHome, loader);
     }
-
 
     @Override
     protected void init() {
@@ -92,6 +90,8 @@ public class TOMConfiguration extends Configuration {
             } else {
                 f = Integer.parseInt(s);
             }
+
+            System.out.println("servers.num: " + n + ", servers.f: " + f);
 
             s = (String) configs.remove("system.shutdownhook");
             shutdownHookEnabled = (s != null) ? Boolean.parseBoolean(s) : false;
@@ -112,7 +112,7 @@ public class TOMConfiguration extends Configuration {
                     requestTimeout = 0;
                 }
             }
-            
+
             s = (String) configs.remove("system.totalordermulticast.batchtimeout");
             if (s == null) {
                 batchTimeout = -1;
@@ -152,7 +152,7 @@ public class TOMConfiguration extends Configuration {
                     timeoutHighMark = 1;
                 }
             }
-            
+
             s = (String) configs.remove("system.totalordermulticast.maxbatchsize");
             if (s == null) {
                 maxBatchSize = 100;
@@ -230,6 +230,8 @@ public class TOMConfiguration extends Configuration {
                 }
             }
 
+            // System.out.println("initialView.length: " + initialView.length);
+
             s = (String) configs.remove("system.ttp.id");
             if (s == null) {
                 ttpId = -1;
@@ -261,49 +263,49 @@ public class TOMConfiguration extends Configuration {
 
             s = (String) configs.remove("system.totalordermulticast.log");
             if (s != null) {
-                    isToLog = Boolean.parseBoolean(s);
+                isToLog = Boolean.parseBoolean(s);
             } else {
-                    isToLog = false;
+                isToLog = false;
             }
 
             s = (String) configs
-                            .remove("system.totalordermulticast.log_parallel");
+                    .remove("system.totalordermulticast.log_parallel");
             if (s != null) {
-                    parallelLog = Boolean.parseBoolean(s);
+                parallelLog = Boolean.parseBoolean(s);
             } else {
-                    parallelLog = false;
+                parallelLog = false;
             }
 
             s = (String) configs
-                            .remove("system.totalordermulticast.log_to_disk");
+                    .remove("system.totalordermulticast.log_to_disk");
             if (s != null) {
-                    logToDisk = Boolean.parseBoolean(s);
+                logToDisk = Boolean.parseBoolean(s);
             } else {
-                    logToDisk = false;
+                logToDisk = false;
             }
 
             s = (String) configs
-                            .remove("system.totalordermulticast.sync_log");
+                    .remove("system.totalordermulticast.sync_log");
             if (s != null) {
-                    syncLog = Boolean.parseBoolean(s);
+                syncLog = Boolean.parseBoolean(s);
             } else {
-                    syncLog = false;
+                syncLog = false;
             }
 
             s = (String) configs
-                            .remove("system.totalordermulticast.checkpoint_to_disk");
+                    .remove("system.totalordermulticast.checkpoint_to_disk");
             if (s == null) {
-                    isToWriteCkpsToDisk = false;
+                isToWriteCkpsToDisk = false;
             } else {
-                    isToWriteCkpsToDisk = Boolean.parseBoolean(s);
+                isToWriteCkpsToDisk = Boolean.parseBoolean(s);
             }
 
             s = (String) configs
-                            .remove("system.totalordermulticast.sync_ckp");
+                    .remove("system.totalordermulticast.sync_ckp");
             if (s == null) {
-                    syncCkp = false;
+                syncCkp = false;
             } else {
-                    syncCkp = Boolean.parseBoolean(s);
+                syncCkp = Boolean.parseBoolean(s);
             }
 
             s = (String) configs.remove("system.totalordermulticast.global_checkpoint_period");
@@ -322,88 +324,89 @@ public class TOMConfiguration extends Configuration {
             } else {
                 numRepliers = Integer.parseInt(s);
             }
- 
+
             s = (String) configs.remove("system.numnettyworkers");
             if (s == null) {
                 numNettyWorkers = 0;
             } else {
                 numNettyWorkers = Integer.parseInt(s);
             }
-            
+
             s = (String) configs.remove("system.communication.bindaddress");
-            
-            Pattern pattern = Pattern.compile("^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
+
+            Pattern pattern = Pattern
+                    .compile("^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
 
             if (s == null || !pattern.matcher(s).matches()) {
                 bindAddress = "";
             } else {
                 bindAddress = s;
             }
-            
+
             s = (String) configs.remove("system.samebatchsize");
             if (s != null) {
-                    sameBatchSize = Boolean.parseBoolean(s);
+                sameBatchSize = Boolean.parseBoolean(s);
             } else {
-                    sameBatchSize = false;
+                sameBatchSize = false;
             }
-            
+
             s = (String) configs.remove("system.totalordermulticast.fairbatch");
             if (s != null) {
-                    fairbatch = Boolean.parseBoolean(s);
+                fairbatch = Boolean.parseBoolean(s);
             } else {
-                    fairbatch = false;
+                fairbatch = false;
             }
-            
+
             /**
-             * Tulio Ribeiro 
+             * Tulio Ribeiro
              * 
              * SSL/TLS configuration parameters.
-             * Default values: 
-             *  #	keyStoreFile = "EC_KeyPair_256.pkcs12";
-             *  #	enabledCiphers = new String[] {"TLS_RSA_WITH_NULL_SHA256", "TLS_ECDHE_ECDSA_WITH_NULL_SHA"};
-             *  #	ssltlsProtocolVersion = "TLSv1.2";
+             * Default values:
+             * # keyStoreFile = "EC_KeyPair_256.pkcs12";
+             * # enabledCiphers = new String[] {"TLS_RSA_WITH_NULL_SHA256",
+             * "TLS_ECDHE_ECDSA_WITH_NULL_SHA"};
+             * # ssltlsProtocolVersion = "TLSv1.2";
              */
-           
-            
+
             s = (String) configs.remove("system.ssltls.key_store_file");
-            if(s == null){
-                keyStoreFile = "EC_KeyPair_256.pkcs12";                        
-            }else{
-            	keyStoreFile = s;
-			}
-            
+            if (s == null) {
+                keyStoreFile = "EC_KeyPair_256.pkcs12";
+            } else {
+                keyStoreFile = s;
+            }
+
             s = (String) configs.remove("system.ssltls.enabled_ciphers");
-            if(s == null){
-                enabledCiphers = new String[] {"TLS_RSA_WITH_NULL_SHA256", "TLS_ECDHE_ECDSA_WITH_NULL_SHA"};
-            }else{
-            	enabledCiphers = s.split(",");
-			}        
-            
-			s = (String) configs.remove("system.ssltls.protocol_version");
-			if (s == null) {
-				ssltlsProtocolVersion = "TLSv1.2";				
-			} else {
-				switch (s) {
-				case "SSLv3":
-					ssltlsProtocolVersion = "SSLv3";
-					break;
-				case "TLSv1":
-					ssltlsProtocolVersion = "TLSv1";
-					break;
-				case "TLSv1.1":
-					ssltlsProtocolVersion = "TLSv1.1";
-					break;
-				case "TLSv1.2":
-					ssltlsProtocolVersion = "TLSv1.2";
-					break;
-				default:
-					ssltlsProtocolVersion = "TLSv1.2";
-					break;
-				}
-			}
-            
+            if (s == null) {
+                enabledCiphers = new String[] { "TLS_RSA_WITH_NULL_SHA256", "TLS_ECDHE_ECDSA_WITH_NULL_SHA" };
+            } else {
+                enabledCiphers = s.split(",");
+            }
+
+            s = (String) configs.remove("system.ssltls.protocol_version");
+            if (s == null) {
+                ssltlsProtocolVersion = "TLSv1.2";
+            } else {
+                switch (s) {
+                    case "SSLv3":
+                        ssltlsProtocolVersion = "SSLv3";
+                        break;
+                    case "TLSv1":
+                        ssltlsProtocolVersion = "TLSv1";
+                        break;
+                    case "TLSv1.1":
+                        ssltlsProtocolVersion = "TLSv1.1";
+                        break;
+                    case "TLSv1.2":
+                        ssltlsProtocolVersion = "TLSv1.2";
+                        break;
+                    default:
+                        ssltlsProtocolVersion = "TLSv1.2";
+                        break;
+                }
+            }
+
         } catch (Exception e) {
-            logger.error("Could not parse system configuration file",e);
+            logger.error("Could not parse system configuration file", e);
         }
 
     }
@@ -423,6 +426,7 @@ public class TOMConfiguration extends Configuration {
     }
 
     public final int[] getInitialView() {
+        // System.out.println("initialView.size = " + this.initialView.length);
         return this.initialView;
     }
 
@@ -437,7 +441,7 @@ public class TOMConfiguration extends Configuration {
     public int getBatchTimeout() {
         return batchTimeout;
     }
-    
+
     public int getReplyVerificationTime() {
         return replyVerificationTime;
     }
@@ -449,7 +453,7 @@ public class TOMConfiguration extends Configuration {
     public int getF() {
         return f;
     }
-    
+
     public int getPaxosHighMark() {
         return paxosHighMark;
     }
@@ -457,11 +461,11 @@ public class TOMConfiguration extends Configuration {
     public int getRevivalHighMark() {
         return revivalHighMark;
     }
-    
+
     public int getTimeoutHighMark() {
         return timeoutHighMark;
     }
-    
+
     public int getMaxBatchSize() {
         return maxBatchSize;
     }
@@ -487,108 +491,112 @@ public class TOMConfiguration extends Configuration {
     }
 
     /**
-     *     *
+     * *
      */
     public int getNumberOfNIOThreads() {
         return numNIOThreads;
     }
 
-    /**     * @return the numberOfNonces     */
+    /** * @return the numberOfNonces */
     public int getNumberOfNonces() {
         return numberOfNonces;
     }
 
     /**
-     * Indicates if signatures should be used (1) or not (0) to authenticate client requests
+     * Indicates if signatures should be used (1) or not (0) to authenticate client
+     * requests
      */
     public int getUseSignatures() {
         return useSignatures;
     }
 
     /**
-     * Indicates the checkpoint period used when fetching the state from the application
+     * Indicates the checkpoint period used when fetching the state from the
+     * application
      */
     public int getCheckpointPeriod() {
         return checkpointPeriod;
     }
 
-	public boolean isToWriteCkpsToDisk() {
-		return isToWriteCkpsToDisk;
-	}
-	
-	public boolean isToWriteSyncCkp() {
-		return syncCkp;
-	}
+    public boolean isToWriteCkpsToDisk() {
+        return isToWriteCkpsToDisk;
+    }
 
-	public boolean isToLog() {
-		return isToLog;
-	}
+    public boolean isToWriteSyncCkp() {
+        return syncCkp;
+    }
 
-	public boolean isToWriteSyncLog() {
-		return syncLog;
-	}
+    public boolean isToLog() {
+        return isToLog;
+    }
 
-	public boolean logToDisk() {
-		return logToDisk;
-	}
+    public boolean isToWriteSyncLog() {
+        return syncLog;
+    }
 
-	public boolean isToLogParallel() {
-		// TODO Auto-generated method stub
-		return parallelLog;
-	}
+    public boolean logToDisk() {
+        return logToDisk;
+    }
+
+    public boolean isToLogParallel() {
+        // TODO Auto-generated method stub
+        return parallelLog;
+    }
 
     /**
-     * Indicates the checkpoint period used when fetching the state from the application
+     * Indicates the checkpoint period used when fetching the state from the
+     * application
      */
     public int getGlobalCheckpointPeriod() {
         return globalCheckpointPeriod;
     }
 
     /**
-     * Indicates if a simple control flow mechanism should be used to avoid an overflow of client requests
+     * Indicates if a simple control flow mechanism should be used to avoid an
+     * overflow of client requests
      */
     public int getUseControlFlow() {
         return useControlFlow;
     }
 
-    public boolean isBFT(){
-    	
-    	return this.isBFT;
+    public boolean isBFT() {
+
+        return this.isBFT;
     }
 
     public int getNumRepliers() {
         return numRepliers;
     }
-    
+
     public int getNumNettyWorkers() {
         return numNettyWorkers;
     }
-    
+
     public boolean getSameBatchSize() {
         return sameBatchSize;
     }
-    
+
     public boolean getFairBatch() {
         return fairbatch;
     }
-    
+
     public String getBindAddress() {
         return bindAddress;
     }
-    
+
     /**
      * Tulio Ribeiro ## SSL/TLS getters.
-     * */
+     */
     public String getSSLTLSProtocolVersion() {
-		return ssltlsProtocolVersion;
-	}
-	
-	public String getSSLTLSKeyStore() {
-		return keyStoreFile; 
-	}
-	
-	public String[] getEnabledCiphers() {
-		return enabledCiphers;
-	}
-    
+        return ssltlsProtocolVersion;
+    }
+
+    public String getSSLTLSKeyStore() {
+        return keyStoreFile;
+    }
+
+    public String[] getEnabledCiphers() {
+        return enabledCiphers;
+    }
+
 }
