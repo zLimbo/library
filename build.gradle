@@ -65,23 +65,6 @@ task remoteDeploy(dependsOn: installDist) {
         def src = project.buildDir.name + fileSeparator + "install" + fileSeparator + project.name
         def target = '~/smartbft'
         println ("from: ${src}, into: ${target}")
-        // ssh.run {
-        //     session(remotes.node0) {
-        //         put from: src, into: target
-        //     }
-        //     session(remotes.node1) {
-        //         put from: src, into: target
-        //     }
-        //     session(remotes.node2) {
-        //         put from: src, into: target
-        //     }
-        //     session(remotes.node3) {
-        //         put from: src, into: target
-        //     }
-        //     session(remotes.node4) {
-        //         put from: src, into: target
-        //     }
-        // }
     }
 }
 
