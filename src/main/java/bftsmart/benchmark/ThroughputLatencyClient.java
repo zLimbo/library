@@ -22,12 +22,12 @@ public class ThroughputLatencyClient {
 	private static AtomicLong countOfRequest = new AtomicLong();
 	private static AtomicInteger numOfClientRunning = new AtomicInteger();
 	static long start;
-	static long interval;
+	static int nRequestPerSecond;
 
 	public static void main(String[] args) throws InterruptedException {
 		if (args.length < 6) {
 			System.out.println("USAGE: bftsmart.benchmark.ThroughputLatencyClient <initial client id> " +
-					"<num clients> <number of operations per client> <request size> <isWrite?> <measurement leader?> <num of request per second>");
+					"<num clients> <number of operations per client> <request size> <isWrite?> <measurement leader?> <nRequestPerSecond>");
 			System.exit(-1);
 		}
 
@@ -38,10 +38,9 @@ public class ThroughputLatencyClient {
 		boolean isWrite = Boolean.parseBoolean(args[4]);
 		boolean measurementLeader = Boolean.parseBoolean(args[5]);
 
-		interval = 0;
+		nRequestPerSecond = numOperationsPerClient;
 		if (args.length > 6) {
-			// System.out.println("thread sleep " + args[6] + " ms");
-			interval = Long.parseLong(args[6]);
+			nRequestPerSecond = Integer.parseInt(args[6]);
 		}
 
 		System.out.println("initialClientId: " + initialClientId +
@@ -50,7 +49,7 @@ public class ThroughputLatencyClient {
 				"\nrequestSize: " + requestSize +
 				"\nisWrite: " + isWrite +
 				"\nmeasurementLeader: " + measurementLeader +
-				"\ninterval: " + interval + "(ms)");
+				"\nnRequestPerSecond: " + nRequestPerSecond);
 
 		CountDownLatch latch = new CountDownLatch(numClients);
 		Client[] clients = new Client[numClients];
@@ -127,7 +126,27 @@ public class ThroughputLatencyClient {
 				}
 				System.out.println(clientId + " start");
 				numOfClientRunning.incrementAndGet();
+
+				long before = System.currentTimeMillis();
 				for (int i = 0; i < numOperations; i++) {
+
+					if (i % nRequestPerSecond == 0) {
+						long take = System.currentTimeMillis() - before;
+						if (take < 1000) {
+							System.out.printf("client %d send %d requests, take: %dms, sleep %dms\n",
+									clientId, i, take, 1000 - take);
+							try {
+								Thread.sleep(1000 - take);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						} else {
+							System.out.printf("client %d send %d requests, take: %dms(>1000ms), no sleep %dms\n",
+									clientId, i, take, 1000 - take);
+						}
+						before = System.currentTimeMillis();
+					}
+
 					long t1, t2, latency;
 					byte[] response;
 					t1 = System.nanoTime();
@@ -154,12 +173,6 @@ public class ThroughputLatencyClient {
 								"client_id: %d, op_seq: %d, latency: %.2f | client_num: %d, tx_num: %d, tps: %.6f, avg_latency: %.6f\n",
 								clientId, i, (double) latency / 1e6, numOfClientRunning.get(), countOfRequest.get(),
 								tps, avgLatency);
-					}
-					try {
-						Thread.sleep(interval);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
 					}
 				}
 				System.out.println(clientId + " finished");
