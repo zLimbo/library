@@ -130,7 +130,7 @@ public class ThroughputLatencyClient {
 				long before = System.currentTimeMillis();
 				for (int i = 0; i < numOperations; i++) {
 
-					if (i % nRequestPerSecond == 0) {
+					if (i != 0 && i % nRequestPerSecond == 0) {
 						long take = System.currentTimeMillis() - before;
 						if (take < 1000) {
 							System.out.printf("client %d send %d requests, take: %dms, sleep %dms\n",
