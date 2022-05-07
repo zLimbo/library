@@ -1,5 +1,6 @@
 package bftsmart.benchmark;
 
+import bftsmart.communication.server.ServersCommunicationLayer;
 import bftsmart.tests.recovery.Operation;
 import bftsmart.tom.MessageContext;
 import bftsmart.tom.ServiceReplica;
@@ -23,11 +24,15 @@ public class ThroughputLatencyServer extends DefaultSingleRecoverable {
 	private double maxThroughput;
 
 	public static void main(String[] args) {
-		if (args.length != 1) {
+		if (args.length < 1) {
 			System.out.println("USAGE: bftsmart.benchmark.ThroughputLatencyServer <process id>");
 			System.exit(-1);
 		}
 		int processId = Integer.parseInt(args[0]);
+		if (args.length > 1) {
+			ServersCommunicationLayer.sleepTime = Integer.parseInt(args[1]);
+		}
+		System.out.println("== ServersCommunicationLayer.sleepTime: " + ServersCommunicationLayer.sleepTime + "ms");
 		new ThroughputLatencyServer(processId);
 	}
 

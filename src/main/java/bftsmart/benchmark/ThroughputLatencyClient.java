@@ -27,7 +27,7 @@ public class ThroughputLatencyClient {
 	public static void main(String[] args) throws InterruptedException {
 		if (args.length < 6) {
 			System.out.println("USAGE: bftsmart.benchmark.ThroughputLatencyClient <initial client id> " +
-					"<num clients> <number of operations per client> <request size> <isWrite?> <measurement leader?>");
+					"<num clients> <number of operations per client> <request size> <isWrite?> <measurement leader?> <num of request per second>");
 			System.exit(-1);
 		}
 
@@ -38,13 +38,10 @@ public class ThroughputLatencyClient {
 		boolean isWrite = Boolean.parseBoolean(args[4]);
 		boolean measurementLeader = Boolean.parseBoolean(args[5]);
 
-		int bootDelay = 10;
-		if (args.length > 6) {
-			bootDelay = Integer.parseInt(args[6]);
-		}
 		interval = 0;
-		if (args.length > 7) {
-			interval = Long.parseLong(args[7]);
+		if (args.length > 6) {
+			// System.out.println("thread sleep " + args[6] + " ms");
+			interval = Long.parseLong(args[6]);
 		}
 
 		System.out.println("initialClientId: " + initialClientId +
@@ -53,8 +50,7 @@ public class ThroughputLatencyClient {
 				"\nrequestSize: " + requestSize +
 				"\nisWrite: " + isWrite +
 				"\nmeasurementLeader: " + measurementLeader +
-				"\nbootDelay: " + bootDelay +
-				"\ninterval: " + interval);
+				"\ninterval: " + interval + "(ms)");
 
 		CountDownLatch latch = new CountDownLatch(numClients);
 		Client[] clients = new Client[numClients];
@@ -87,7 +83,7 @@ public class ThroughputLatencyClient {
 			clients[i] = new Client(initialClientId + i,
 					numOperationsPerClient, isWrite, measurementLeader, latch);
 			clients[i].start();
-			Thread.sleep(bootDelay);
+			// Thread.sleep(bootDelay);
 		}
 
 		for (Client client : clients) {
@@ -158,14 +154,13 @@ public class ThroughputLatencyClient {
 								"client_id: %d, op_seq: %d, latency: %.2f | client_num: %d, tx_num: %d, tps: %.6f, avg_latency: %.6f\n",
 								clientId, i, (double) latency / 1e6, numOfClientRunning.get(), countOfRequest.get(),
 								tps, avgLatency);
-
 					}
-					// try {
-					// Thread.sleep(interval);
-					// } catch (InterruptedException e) {
-					// // TODO Auto-generated catch block
-					// e.printStackTrace();
-					// }
+					try {
+						Thread.sleep(interval);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				System.out.println(clientId + " finished");
 				numOfClientRunning.decrementAndGet();

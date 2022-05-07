@@ -17,7 +17,9 @@ package bftsmart.communication.server;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -43,6 +45,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.Scanner;
 
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -262,6 +265,8 @@ public class ServersCommunicationLayer extends Thread {
     }
     // ******* EDUARDO END **************//
 
+    public static long sleepTime = 0;
+
     public final void send(int[] targets, SystemMessage sm, boolean useMAC) {
         ByteArrayOutputStream bOut = new ByteArrayOutputStream(248);
         try {
@@ -280,6 +285,17 @@ public class ServersCommunicationLayer extends Thread {
         /* Tulio A. Ribeiro */
         Integer[] targetsShuffled = Arrays.stream(targets).boxed().toArray(Integer[]::new);
         Collections.shuffle(Arrays.asList(targetsShuffled), new Random(System.nanoTime()));
+
+        if (sleepTime > 0) {
+            try {
+                Random random = new Random();
+                
+                Thread.sleep(sleepTime);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
 
         for (int target : targetsShuffled) {
             try {

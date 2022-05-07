@@ -31,7 +31,7 @@ for srv in ${servers[@]}; do
     start=$(date +%s)
     # scp -r z@${client}:~/smartbft z@${srv}:~/smartbft >/dev/null
     # ssh z@${client} "scp -r ~/smartbft z@${srv}:~/smartbft"
-    sshpass -p z scp -r ./build/install/library/* z@${srv}:~/smartbft >/dev/null 2>&1
+    sshpass -p z scp -r ./build/install/library/* z@${srv}:~/smartbft
     end=$(date +%s)
     take=$((end - start))
     printf "\rdeploy in server%d %-16s ok, take %ds\n" ${id} ${srv} ${take}
